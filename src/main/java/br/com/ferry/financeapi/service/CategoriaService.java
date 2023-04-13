@@ -3,7 +3,7 @@ package br.com.ferry.financeapi.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.ferry.financeapi.model.Categoria;
@@ -15,11 +15,15 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    public ResponseEntity<List<Categoria>> findAll() {
-        return ResponseEntity.ok().body(categoriaRepository.findAll());
+    public List<Categoria> findAll() {
+        return categoriaRepository.findAll();
     }
 
-    public ResponseEntity<Categoria> save(Categoria categoria) {
-        return ResponseEntity.ok(categoriaRepository.save(categoria));
+    public Categoria save(Categoria categoria) {
+        return categoriaRepository.save(categoria);
+    }
+
+    public Categoria getById(Long id) throws NotFoundException {
+        return categoriaRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 }
