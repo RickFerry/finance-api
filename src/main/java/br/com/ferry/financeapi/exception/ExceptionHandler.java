@@ -1,5 +1,7 @@
 package br.com.ferry.financeapi.exception;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMessage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -51,6 +54,24 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler({ EmptyResultDataAccessException.class })
     public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex,
+            WebRequest request) {
+        String msgUsuario = messageSource.getMessage("Operação não permitida!", null, LocaleContextHolder.getLocale());
+        String msgDev = getRootCauseMessage(ex);
+        List<Error> errors = Arrays.asList(new Error(msgUsuario, msgDev));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler({ PessoaInexistenteOuInativaException.class })
+    public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex,
+            WebRequest request) {
+        String msgUsuario = messageSource.getMessage("Pessoa inexistente ou inativa!", null, LocaleContextHolder.getLocale());
+        String msgDev = getRootCauseMessage(ex);
+        List<Error> errors = Arrays.asList(new Error(msgUsuario, msgDev));
+        return handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler({ DataIntegrityViolationException.class })
+    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex,
             WebRequest request) {
         String msgUsuario = messageSource.getMessage("Não encontrado!!!", null, LocaleContextHolder.getLocale());
         String msgDev = ex.getCause() != null ? ex.getCause().toString() : ex.toString();

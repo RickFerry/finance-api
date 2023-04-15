@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import br.com.ferry.financeapi.exception.PessoaInexistenteOuInativaException;
 import br.com.ferry.financeapi.model.Lancamento;
 import br.com.ferry.financeapi.repository.LancamentoRepository;
 
@@ -21,7 +22,10 @@ public class LancamentoService {
     }
 
     public Lancamento save(Lancamento lancamento) {
-        return lancamentoRepository.save(lancamento);
+        if (lancamento.getPessoa() != null || lancamento.getPessoa().getAtivo()) {
+            return lancamentoRepository.save(lancamento);
+        }
+        throw new PessoaInexistenteOuInativaException();
     }
 
     public Lancamento getById(Long id) throws NotFoundException {
