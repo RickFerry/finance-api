@@ -29,7 +29,6 @@ public class CategoriaController {
     @GetMapping
     public ResponseEntity<List<Categoria>> findAll() {
         return ResponseEntity.ok().body(categoriaService.findAll());
-
     }
 
     @PostMapping
@@ -45,7 +44,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> getById(@PathVariable Long id){
+    public ResponseEntity<Categoria> getById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok().body(categoriaService.getById(id));
         } catch (NotFoundException e) {

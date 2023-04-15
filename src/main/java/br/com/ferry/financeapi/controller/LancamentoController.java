@@ -18,40 +18,40 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.ferry.financeapi.model.Pessoa;
-import br.com.ferry.financeapi.service.PessoaService;
+import br.com.ferry.financeapi.model.Lancamento;
+import br.com.ferry.financeapi.service.LancamentoService;
 import lombok.extern.java.Log;
 
 @Log
 @RestController
-@RequestMapping("/pessoas")
-public class PessoaController {
+@RequestMapping("/lancamentos")
+public class LancamentoController {
 
     @Autowired
-    private PessoaService pessoaService;
+    private LancamentoService lancamentoService;
 
     @GetMapping
-    public ResponseEntity<List<Pessoa>> findAll() {
-        return ResponseEntity.ok().body(pessoaService.findAll());
+    public ResponseEntity<List<Lancamento>> findAll() {
+        return ResponseEntity.ok().body(lancamentoService.findAll());
 
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Pessoa> save(@RequestBody Pessoa pessoa,
+    public ResponseEntity<Lancamento> save(@RequestBody Lancamento lancamento,
             UriComponentsBuilder uriComponentsBuilder) {
         return ResponseEntity
                 .created(
                         uriComponentsBuilder
-                                .path("/pessoas/{id}")
-                                .buildAndExpand(pessoa.getId()).toUri())
-                .body(pessoaService.save(pessoa));
+                                .path("/lancamentos/{id}")
+                                .buildAndExpand(lancamento.getId()).toUri())
+                .body(lancamentoService.save(lancamento));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pessoa> getById(@PathVariable Long id) {
+    public ResponseEntity<Lancamento> getById(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok().body(pessoaService.getById(id));
+            return ResponseEntity.ok().body(lancamentoService.getById(id));
         } catch (NotFoundException e) {
             log.info(e.getMessage());
             return ResponseEntity.notFound().build();
@@ -62,11 +62,11 @@ public class PessoaController {
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Long id) {
-        pessoaService.delete(id);
+        lancamentoService.delete(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pessoa> update(@PathVariable Long id, @RequestBody Pessoa pessoa) {
-        return ResponseEntity.ok().body(pessoaService.update(id, pessoa));
+    public ResponseEntity<Lancamento> update(@PathVariable Long id, @RequestBody Lancamento lancamento) {
+        return ResponseEntity.ok().body(lancamentoService.update(id, lancamento));
     }
 }
