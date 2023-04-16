@@ -26,8 +26,8 @@ public class Lancamento {
     private Long id;
 
     private String descricao;
-    private LocalDate dataVencimento;
-    private LocalDate dataPagamento;
+    private LocalDate dataVencimento = LocalDate.now(); 
+    private LocalDate dataPagamento = LocalDate.now();
     private BigDecimal valor;
     private String observacao;
 
