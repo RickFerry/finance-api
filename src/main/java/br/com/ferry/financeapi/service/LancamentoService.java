@@ -1,10 +1,11 @@
 package br.com.ferry.financeapi.service;
 
-import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import br.com.ferry.financeapi.exception.PessoaInexistenteOuInativaException;
@@ -17,8 +18,8 @@ public class LancamentoService {
     @Autowired
     private LancamentoRepository lancamentoRepository;
 
-    public List<Lancamento> findAll() {
-        return lancamentoRepository.findAll();
+    public Page<Lancamento> findAll(@PageableDefault(size = 5, sort = {"tipoLancamento"}) Pageable page) {
+        return lancamentoRepository.findAll(page);
     }
 
     public Lancamento save(Lancamento lancamento) {

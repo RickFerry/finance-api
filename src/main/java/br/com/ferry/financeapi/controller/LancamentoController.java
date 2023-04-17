@@ -1,9 +1,9 @@
 package br.com.ferry.financeapi.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +31,8 @@ public class LancamentoController {
     private LancamentoService lancamentoService;
 
     @GetMapping
-    public ResponseEntity<List<Lancamento>> findAll() {
-        return ResponseEntity.ok().body(lancamentoService.findAll());
+    public ResponseEntity<Page<Lancamento>> findAll(Pageable page) {
+        return ResponseEntity.ok(lancamentoService.findAll(page));
 
     }
 
