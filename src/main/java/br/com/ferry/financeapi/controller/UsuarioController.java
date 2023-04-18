@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +21,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.ferry.financeapi.model.Usuario;
 import br.com.ferry.financeapi.service.UsuarioService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.java.Log;
 
 @Log
 @RestController
 @RequestMapping("/usuarios")
+@EnableMethodSecurity(prePostEnabled = true)
 public class UsuarioController {
 
     @Autowired
@@ -33,11 +36,11 @@ public class UsuarioController {
     @GetMapping
     public ResponseEntity<List<Usuario>> findAll() {
         return ResponseEntity.ok().body(usuarioService.findAll());
-
     }
 
     @PostMapping
     @Transactional
+    @RolesAllowed("ADMIN")
     public ResponseEntity<Usuario> save(@RequestBody Usuario usuario,
             UriComponentsBuilder uriComponentsBuilder) {
         return ResponseEntity
@@ -60,12 +63,14 @@ public class UsuarioController {
 
     @Transactional
     @DeleteMapping
+    @RolesAllowed("ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Long id) {
         usuarioService.delete(id);
     }
 
     @PutMapping("/{id}")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
         return ResponseEntity.ok().body(usuarioService.update(id, usuario));
     }

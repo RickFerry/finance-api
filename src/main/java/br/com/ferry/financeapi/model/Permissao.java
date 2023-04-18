@@ -1,7 +1,5 @@
 package br.com.ferry.financeapi.model;
 
-import java.util.List;
-
 import org.springframework.security.core.GrantedAuthority;
 
 import br.com.ferry.financeapi.model.enums.Descricao;
@@ -11,7 +9,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
