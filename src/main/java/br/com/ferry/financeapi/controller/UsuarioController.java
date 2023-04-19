@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.ferry.financeapi.model.Usuario;
+import br.com.ferry.financeapi.config.security.model.Usuario;
 import br.com.ferry.financeapi.service.UsuarioService;
 import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.java.Log;
