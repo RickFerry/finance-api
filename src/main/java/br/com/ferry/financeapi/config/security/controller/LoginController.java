@@ -1,4 +1,4 @@
-package br.com.ferry.financeapi.config.security;
+package br.com.ferry.financeapi.config.security.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ferry.financeapi.config.security.model.TokenDTO;
+import br.com.ferry.financeapi.config.security.service.TokenService;
 import br.com.ferry.financeapi.model.Usuario;
-import br.com.ferry.financeapi.service.TokenService;
 
 @RestController
 @RequestMapping("/login")

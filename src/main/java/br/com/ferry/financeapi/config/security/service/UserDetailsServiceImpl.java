@@ -1,4 +1,4 @@
-package br.com.ferry.financeapi.config.security;
+package br.com.ferry.financeapi.config.security.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;

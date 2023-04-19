@@ -1,7 +1,11 @@
 package br.com.ferry.financeapi.config.security;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,16 +13,23 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import br.com.ferry.financeapi.config.security.service.SecurityFilter;
 
 @Configuration
 public class WebSecurityConfig {
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http, @Autowired SecurityFilter securityFilter) throws Exception {
         return http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .csrf(withDefaults())
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .csrf().disable()
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
@@ -28,7 +39,12 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    SecurityFilter securityFilter() {
+        return new SecurityFilter();
+    }
+
+    @Bean
     AuthenticationManager authencticationManager(AuthenticationConfiguration config) throws Exception {
-         return config.getAuthenticationManager();
+        return config.getAuthenticationManager();
     }
 }

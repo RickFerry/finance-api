@@ -1,4 +1,4 @@
-package br.com.ferry.financeapi.exception;
+package br.com.ferry.financeapi.config.exception;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMessage;
 

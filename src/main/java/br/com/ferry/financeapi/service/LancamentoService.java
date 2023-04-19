@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
-import br.com.ferry.financeapi.exception.PessoaInexistenteOuInativaException;
+import br.com.ferry.financeapi.config.exception.PessoaInexistenteOuInativaException;
 import br.com.ferry.financeapi.model.Lancamento;
 import br.com.ferry.financeapi.repository.LancamentoRepository;
 
