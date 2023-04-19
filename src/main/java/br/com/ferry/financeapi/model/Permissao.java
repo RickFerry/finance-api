@@ -3,6 +3,7 @@ package br.com.ferry.financeapi.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import br.com.ferry.financeapi.model.enums.Descricao;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,6 +25,7 @@ public class Permissao implements GrantedAuthority {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
     private Descricao descricao;
 
     @Override
