@@ -1,4 +1,4 @@
-package br.com.ferry.financeapi.model;
+package br.com.ferry.financeapi.config.security.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
