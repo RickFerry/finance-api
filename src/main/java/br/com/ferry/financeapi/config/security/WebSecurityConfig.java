@@ -21,7 +21,6 @@ import br.com.ferry.financeapi.config.security.service.SecurityFilter;
 @Configuration
 public class WebSecurityConfig {
 
-    @Bean
     void addCorsMappings(CorsRegistry registry){
         registry.addMapping("/**");
     }
