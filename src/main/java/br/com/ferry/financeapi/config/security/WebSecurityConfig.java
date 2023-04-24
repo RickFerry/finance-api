@@ -14,14 +14,16 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import br.com.ferry.financeapi.config.security.service.SecurityFilter;
 
 @EnableWebMvc
 @Configuration
-public class WebSecurityConfig {
+public class WebSecurityConfig implements WebMvcConfigurer{
 
-    void addCorsMappings(CorsRegistry registry){
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");
     }
 
