@@ -38,6 +38,7 @@ public class Lancamento {
     @ManyToOne(fetch = FetchType.LAZY)
     private Pessoa pessoa;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     private Categoria categoria;
 

@@ -2,6 +2,8 @@ package br.com.ferry.financeapi.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +26,7 @@ public class Categoria {
     
     private String nome;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<Lancamento> lancamentos;
 }
