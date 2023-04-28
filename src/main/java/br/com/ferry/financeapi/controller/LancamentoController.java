@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.ferry.financeapi.model.Lancamento;
 import br.com.ferry.financeapi.service.LancamentoService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.java.Log;
 
 @Log
@@ -31,6 +32,7 @@ public class LancamentoController {
     private LancamentoService lancamentoService;
 
     @GetMapping
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<Page<Lancamento>> findAll(Pageable page) {
         return ResponseEntity.ok(lancamentoService.findAll(page));
 
@@ -38,6 +40,7 @@ public class LancamentoController {
 
     @PostMapping
     @Transactional
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<Lancamento> save(@RequestBody Lancamento lancamento,
             UriComponentsBuilder uriComponentsBuilder) {
         return ResponseEntity
@@ -49,6 +52,7 @@ public class LancamentoController {
     }
 
     @GetMapping("/{id}")
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<Lancamento> getById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok().body(lancamentoService.getById(id));
@@ -60,6 +64,7 @@ public class LancamentoController {
 
     @Transactional
     @DeleteMapping
+    @RolesAllowed({"ADMIN"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Long id) {
         lancamentoService.delete(id);

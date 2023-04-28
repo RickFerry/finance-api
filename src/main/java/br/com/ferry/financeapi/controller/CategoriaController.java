@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.ferry.financeapi.model.Categoria;
 import br.com.ferry.financeapi.service.CategoriaService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.java.Log;
 
 @Log
@@ -27,12 +28,13 @@ public class CategoriaController {
     private CategoriaService categoriaService;
 
     @GetMapping
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<List<Categoria>> findAll() {
         return ResponseEntity.ok().body(categoriaService.findAll());
     }
 
     @PostMapping
-    @Transactional
+    @Transactional@RolesAllowed({"ADMIN"})
     public ResponseEntity<Categoria> save(@RequestBody Categoria categoria,
             UriComponentsBuilder uriComponentsBuilder) {
         return ResponseEntity
@@ -44,6 +46,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<Categoria> getById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok().body(categoriaService.getById(id));

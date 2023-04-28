@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.ferry.financeapi.model.Pessoa;
 import br.com.ferry.financeapi.service.PessoaService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.java.Log;
 
 @Log
@@ -31,6 +32,7 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @GetMapping
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<List<Pessoa>> findAll() {
         return ResponseEntity.ok().body(pessoaService.findAll());
 
@@ -38,6 +40,7 @@ public class PessoaController {
 
     @PostMapping
     @Transactional
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<Pessoa> save(@RequestBody Pessoa pessoa,
             UriComponentsBuilder uriComponentsBuilder) {
         return ResponseEntity
@@ -49,6 +52,7 @@ public class PessoaController {
     }
 
     @GetMapping("/{id}")
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<Pessoa> getById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok().body(pessoaService.getById(id));
@@ -60,6 +64,7 @@ public class PessoaController {
 
     @Transactional
     @DeleteMapping
+    @RolesAllowed({"ADMIN"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Long id) {
         pessoaService.delete(id);

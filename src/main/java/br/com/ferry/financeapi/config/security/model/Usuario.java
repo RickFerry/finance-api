@@ -1,7 +1,7 @@
 package br.com.ferry.financeapi.config.security.model;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,9 +12,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,13 +37,12 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private String senha;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuario_permissao", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "permissao_id"))
-    private List<Permissao> permissoes;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Permissao permissao;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.permissoes;
+        return Arrays.asList(this.permissao);
     }
 
     @Override

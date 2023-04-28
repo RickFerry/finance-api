@@ -34,13 +34,14 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<List<Usuario>> findAll() {
         return ResponseEntity.ok().body(usuarioService.findAll());
     }
 
     @PostMapping
     @Transactional
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<Usuario> save(@RequestBody Usuario usuario,
             UriComponentsBuilder uriComponentsBuilder) {
         return ResponseEntity
@@ -52,6 +53,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<Usuario> getById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok().body(usuarioService.getById(id));
@@ -63,14 +65,14 @@ public class UsuarioController {
 
     @Transactional
     @DeleteMapping
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Long id) {
         usuarioService.delete(id);
     }
 
     @PutMapping("/{id}")
-    @RolesAllowed("ROLE_ADMIN")
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
         return ResponseEntity.ok().body(usuarioService.update(id, usuario));
     }
