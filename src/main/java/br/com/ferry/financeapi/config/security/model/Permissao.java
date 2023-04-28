@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import br.com.ferry.financeapi.model.enums.Descricao;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,6 +26,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Permissao implements GrantedAuthority {
 	private static final long serialVersionUID = -8951414894540867894L;
 
