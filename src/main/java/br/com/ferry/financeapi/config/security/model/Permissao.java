@@ -5,14 +5,16 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 
 import br.com.ferry.financeapi.model.enums.Descricao;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,7 +34,7 @@ public class Permissao implements GrantedAuthority {
     @Column(nullable = false, unique = true)
     private Descricao descricao;
     
-    @OneToMany(mappedBy = "permissao")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
 
     @Override

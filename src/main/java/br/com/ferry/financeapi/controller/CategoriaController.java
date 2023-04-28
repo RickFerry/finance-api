@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,19 +23,20 @@ import lombok.extern.java.Log;
 @Log
 @RestController
 @RequestMapping("/categorias")
+@EnableMethodSecurity(prePostEnabled = true)
 public class CategoriaController {
 
     @Autowired
     private CategoriaService categoriaService;
 
     @GetMapping
-    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<List<Categoria>> findAll() {
         return ResponseEntity.ok().body(categoriaService.findAll());
     }
 
     @PostMapping
-    @Transactional@RolesAllowed({"ADMIN"})
+    @Transactional
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<Categoria> save(@RequestBody Categoria categoria,
             UriComponentsBuilder uriComponentsBuilder) {
         return ResponseEntity
@@ -46,7 +48,6 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
-    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<Categoria> getById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok().body(categoriaService.getById(id));

@@ -1,4 +1,4 @@
-package br.com.ferry.financeapi.controller;
+package br.com.ferry.financeapi.config.security.controller;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping
-    @RolesAllowed({"ADMIN", "USER"})
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<List<Usuario>> findAll() {
         return ResponseEntity.ok().body(usuarioService.findAll());
     }
@@ -53,7 +53,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    @RolesAllowed({"ADMIN", "USER"})
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<Usuario> getById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok().body(usuarioService.getById(id));
