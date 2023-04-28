@@ -3,6 +3,8 @@ package br.com.ferry.financeapi.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import br.com.ferry.financeapi.model.enums.TipoLancamento;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,6 +34,7 @@ public class Lancamento {
     private BigDecimal valor;
     private String observacao;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     private Pessoa pessoa;
 
