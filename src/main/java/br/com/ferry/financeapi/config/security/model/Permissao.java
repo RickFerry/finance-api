@@ -26,25 +26,23 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Permissao implements GrantedAuthority {
 	private static final long serialVersionUID = -8951414894540867894L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true)
-    private Descricao descricao;
-    
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Usuario> usuarios;
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, unique = true)
+	private Descricao descricao;
 
-    @Override
-    public String getAuthority() {
-        return descricao.toString();
-    }
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Usuario> usuarios;
+
+	@Override
+	public String getAuthority() {
+		return descricao.toString();
+	}
 }
