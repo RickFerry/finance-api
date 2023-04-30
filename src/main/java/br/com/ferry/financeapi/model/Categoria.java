@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,6 +31,6 @@ public class Categoria implements Serializable {
 
     private String nome;
 
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<Lancamento> lancamentos;
 }
