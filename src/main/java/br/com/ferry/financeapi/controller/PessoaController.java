@@ -37,7 +37,6 @@ public class PessoaController {
     @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<Page<Pessoa>> findAll(Pageable page) {
         return ResponseEntity.ok().body(pessoaService.findAll(page));
-
     }
 
     @PostMapping
@@ -73,6 +72,7 @@ public class PessoaController {
     }
 
     @PutMapping("/{id}")
+    @RolesAllowed({"ADMIN"})
     public ResponseEntity<Pessoa> update(@PathVariable Long id, @RequestBody Pessoa pessoa) {
         return ResponseEntity.ok().body(pessoaService.update(id, pessoa));
     }
