@@ -41,7 +41,7 @@ public class Usuario implements UserDetails {
 	@Column(nullable = false)
 	private String senha;
 
-	@ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.EAGER)
 	private Pessoa pessoa;
 
 	@ManyToMany(mappedBy = "usuarios", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

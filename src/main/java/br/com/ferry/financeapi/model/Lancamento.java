@@ -39,11 +39,10 @@ public class Lancamento implements Serializable {
     private String observacao;
     private Boolean ativo = true;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Pessoa pessoa;
 
-    
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Categoria categoria;
 
     @Enumerated(EnumType.STRING)
