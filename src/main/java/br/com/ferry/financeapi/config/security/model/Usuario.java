@@ -3,6 +3,7 @@ package br.com.ferry.financeapi.config.security.model;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -41,6 +42,7 @@ public class Usuario implements UserDetails {
 	@Column(nullable = false)
 	private String senha;
 
+	@Transient
 	@ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY)
 	private Pessoa pessoa;
 

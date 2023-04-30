@@ -37,7 +37,7 @@ public class Pessoa implements Serializable {
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lancamento> lancamentos;
 
-    @OneToMany(targetEntity = Usuario.class, fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
 
     @Embedded
