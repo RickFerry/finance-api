@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import org.springframework.data.annotation.Transient;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -41,11 +39,10 @@ public class Lancamento implements Serializable {
     private String observacao;
     private Boolean ativo = true;
 
-    @Transient
     @ManyToOne(fetch = FetchType.LAZY)
     private Pessoa pessoa;
 
-    @Transient
+    
     @ManyToOne(fetch = FetchType.LAZY)
     private Categoria categoria;
 
