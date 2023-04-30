@@ -65,10 +65,10 @@ public class LancamentoController {
     }
 
     @Transactional
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @RolesAllowed({"ADMIN"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(Long id) {
+    public void delete(@PathVariable Long id) {
         lancamentoService.delete(id);
     }
 

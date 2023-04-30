@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import br.com.ferry.financeapi.config.security.model.Usuario;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -32,6 +33,10 @@ public class Pessoa {
     @JsonManagedReference
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lancamento> lancamentos;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    private List<Usuario> usuarios;
 
     @Embedded
     private Endereco endereco;
