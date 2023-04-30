@@ -1,8 +1,10 @@
 package br.com.ferry.financeapi.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -18,15 +20,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Categoria {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Categoria implements Serializable {
+    private static final long serialVersionUID = 2417172041950251807L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String nome;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<Lancamento> lancamentos;
 }

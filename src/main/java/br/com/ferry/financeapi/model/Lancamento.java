@@ -1,9 +1,11 @@
 package br.com.ferry.financeapi.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.com.ferry.financeapi.model.enums.TipoLancamento;
 import jakarta.persistence.Entity;
@@ -22,26 +24,31 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Lancamento {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Lancamento implements Serializable {
+    private static final long serialVersionUID = 2405172221950251807L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String descricao;
-    private LocalDate dataVencimento = LocalDate.now(); 
-    private LocalDate dataPagamento = LocalDate.now();
+    private LocalDate dataVencimento;
+    private LocalDate dataPagamento;
     private BigDecimal valor;
     private String observacao;
+    private Boolean ativo = true;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     private Pessoa pessoa;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     private Categoria categoria;
 
     @Enumerated(EnumType.STRING)
     private TipoLancamento tipoLancamento;
+
+    public void inativar() {
+        this.ativo = false;
+    }
 }

@@ -19,7 +19,7 @@ public class LancamentoService {
     private LancamentoRepository lancamentoRepository;
 
     public Page<Lancamento> findAll(@PageableDefault(size = 5, sort = {"tipoLancamento"}) Pageable page) {
-        return lancamentoRepository.findAll(page);
+        return lancamentoRepository.findAllByAtivoTrue(page);
     }
 
     public Lancamento save(Lancamento lancamento) {
@@ -34,7 +34,8 @@ public class LancamentoService {
     }
 
     public void delete(Long id) {
-        lancamentoRepository.deleteById(id);
+        Lancamento lancamento = lancamentoRepository.getReferenceById(id);
+        lancamento.inativar();
     }
 
     public Lancamento update(Long id, Lancamento lancamento) {

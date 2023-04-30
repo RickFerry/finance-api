@@ -1,8 +1,10 @@
 package br.com.ferry.financeapi.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import br.com.ferry.financeapi.config.security.model.Usuario;
 import jakarta.persistence.CascadeType;
@@ -21,7 +23,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pessoa {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Pessoa implements Serializable {
+    private static final long serialVersionUID = 2405172049250251807L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +34,10 @@ public class Pessoa {
     private String nome;
     private Boolean ativo;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lancamento> lancamentos;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Usuario.class, fetch = FetchType.EAGER, mappedBy = "pessoa", cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
 
     @Embedded

@@ -1,9 +1,9 @@
 package br.com.ferry.financeapi.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +30,8 @@ public class CategoriaController {
     private CategoriaService categoriaService;
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> findAll() {
-        return ResponseEntity.ok().body(categoriaService.findAll());
+    public ResponseEntity<Page<Categoria>> findAll(Pageable page) {
+        return ResponseEntity.ok().body(categoriaService.findAll(page));
     }
 
     @PostMapping

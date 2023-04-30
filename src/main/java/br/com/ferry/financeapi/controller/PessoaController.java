@@ -1,9 +1,9 @@
 package br.com.ferry.financeapi.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -35,8 +35,8 @@ public class PessoaController {
 
     @GetMapping
     @RolesAllowed({"ADMIN", "USER"})
-    public ResponseEntity<List<Pessoa>> findAll() {
-        return ResponseEntity.ok().body(pessoaService.findAll());
+    public ResponseEntity<Page<Pessoa>> findAll(Pageable page) {
+        return ResponseEntity.ok().body(pessoaService.findAll(page));
 
     }
 
