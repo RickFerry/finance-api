@@ -20,41 +20,36 @@ import br.com.ferry.financeapi.config.security.service.SecurityFilter;
 
 @EnableWebMvc
 @Configuration
-public class WebSecurityConfig implements WebMvcConfigurer{
-	
+public class WebSecurityConfig implements WebMvcConfigurer {
+
 	@Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOriginPatterns("/**");
-    }
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**").allowCredentials(true).allowedOriginPatterns("*")
+				.allowedMethods("GET", "OPTIONS", "PATCH", "DELETE", "POST", "PUT").allowedHeaders("'X-CSRF-Token",
+						"X-Requested-With", "Accept", "Accept-Version", "Content-Length", "Content-MD5", "Content-Type",
+						"Date", "X-Api-Version", "Authorization");
+	}
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http, @Autowired SecurityFilter securityFilter) throws Exception {
-        return http
-        		.cors()
-        		.and()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+	@Bean
+	SecurityFilterChain filterChain(HttpSecurity http, @Autowired SecurityFilter securityFilter) throws Exception {
+		return http.cors().and().csrf().disable().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeHttpRequests()
+				.requestMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated().and()
+				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
+	}
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    SecurityFilter securityFilter() {
-        return new SecurityFilter();
-    }
+	@Bean
+	SecurityFilter securityFilter() {
+		return new SecurityFilter();
+	}
 
-    @Bean
-    AuthenticationManager authencticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
+	@Bean
+	AuthenticationManager authencticationManager(AuthenticationConfiguration config) throws Exception {
+		return config.getAuthenticationManager();
+	}
 }
