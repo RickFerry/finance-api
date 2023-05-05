@@ -64,10 +64,10 @@ public class PessoaController {
     }
 
     @Transactional
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @RolesAllowed({"ADMIN"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(Long id) {
+    public void delete(@PathVariable Long id) {
         pessoaService.delete(id);
     }
 

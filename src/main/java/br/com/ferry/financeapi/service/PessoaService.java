@@ -29,7 +29,8 @@ public class PessoaService {
     }
 
     public void delete(Long id) {
-        pessoaRepository.deleteById(id);
+        Pessoa pessoa = pessoaRepository.getReferenceById(id);
+        pessoa.inativar();
     }
 
     public Pessoa update(Long id, Pessoa pessoa) {

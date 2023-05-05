@@ -42,4 +42,8 @@ public class Pessoa implements Serializable {
 
     @Embedded
     private Endereco endereco;
+
+	public void inativar() {
+		this.ativo = false;
+	}
 }
