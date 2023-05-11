@@ -1,6 +1,7 @@
 package br.com.ferry.financeapi.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,10 +23,12 @@ import br.com.ferry.financeapi.config.security.service.SecurityFilter;
 @Configuration
 public class WebSecurityConfig implements WebMvcConfigurer {
 
+	@Value("${cors.origins}")
+	private String corsOrigins;
+
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowCredentials(true).allowedOriginPatterns("*")
-				.allowedMethods("*").allowedHeaders("*");
+		registry.addMapping("/**").allowedMethods("*").allowedOrigins(corsOrigins);
 	}
 
 	@Bean
